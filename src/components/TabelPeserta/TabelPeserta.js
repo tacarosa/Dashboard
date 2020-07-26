@@ -5,6 +5,8 @@ import ToolkitProvider from 'react-bootstrap-table2-toolkit'
 import paginationFactory from 'react-bootstrap-table2-paginator'
 import SearchBar from "../../components/seachbar/SearchbarTabel"
 import ModalTambahPeserta from '../modal/ModalTambahPeserta'
+import edit from "../../assets/img/edit.svg"
+import trash from "../../assets/img/trash.svg"
 
 class TabelPeserta extends Component {
     constructor(props) {
@@ -18,12 +20,48 @@ class TabelPeserta extends Component {
              show : false
         }
         this.handleShowModal = this.handleShowModal.bind(this)
+        this.actionFormatter = this.actionFormatter.bind(this)
     }
     
     handleShowModal() {
         this.setState({
             show: !this.state.show
         })
+    }
+    
+    actionFormatter(cell, row, rowIndex) {
+        const { hoverIdx } = this.state
+        if ((hoverIdx !== null || hoverIdx !== undefined) && hoverIdx === rowIndex) {
+            return (
+                <div id="action">
+                    <button
+                        name="verifikasi"
+                        className="btn btn-action"
+                        onClick={this.handleShowModal}>
+                        <img src={edit} alt="Edit" />
+                    </button>
+                    <button
+                        name="hapus"
+                        className="btn btn-action-delete">
+                        <img src={trash} alt="Hapus" />
+                    </button>
+                </div>
+            )
+        }
+    }
+
+    rowEvents = {
+        onClick: (e, row) => {
+            this.setState({ 
+                RowSelected: row, 
+            })
+        },
+        onMouseEnter: (e, row, rowIndex) => {
+            this.setState({ hoverIdx: rowIndex });
+        },
+        onMouseLeave: () => {
+            this.setState({ hoverIdx: null });
+        }
     }
 
     render() {
@@ -32,7 +70,12 @@ class TabelPeserta extends Component {
             { dataField:'nama',text:'Nama' },
             { dataField:'test',text:'Test yang Diikuti' },
             { dataField:'status',text:'Status' },
-            { dataField:'aksi',text:'Aksi' },
+            {
+                dataField: 'aksi',
+                text: 'Aksi',
+                formatter: this.actionFormatter,
+                formatExtraData: { hoverIdx: this.state.hoverIdx }
+            },
         ]
 
         const options = {
@@ -81,6 +124,7 @@ class TabelPeserta extends Component {
                                     classes="tabel-peserta"
                                     wrapperClasses="tabel-peserta-wrapper"
                                     bordered={ false }
+                                    rowEvents={this.rowEvents}
                                     pagination={ paginationFactory(options) }
                                 />
                             </div>

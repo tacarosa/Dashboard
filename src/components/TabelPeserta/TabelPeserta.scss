@@ -35,6 +35,7 @@
 .tabel-peserta {
     padding: 20px;
     text-align: center;
+    font-size: 14px;
 
     td, th {
         padding: 20px;
@@ -52,8 +53,27 @@
     th:nth-child(3), td:nth-child(3) {
         text-align: left;
     }
-    
+
+    th:nth-child(5) {
+        width: 200px;
+    }
+
 }
+#action {
+
+    .btn-action {
+        font-size: 14px;
+        background-color: #007bff;
+        margin-right: 10px;
+    }
+    
+    .btn-action-delete {
+        background-color: #ff4d57;
+        font-size: 14px;
+    }
+}
+
+
 
 .tabel-peserta-wrapper {
     overflow-x: auto;

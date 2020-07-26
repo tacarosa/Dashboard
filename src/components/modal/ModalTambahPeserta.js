@@ -1,14 +1,18 @@
 import React from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
+import "./Modal.scss"
 
 const ModalTambahPeserta = (props) => {
-    const submitForm = () => {
+    const handleSubmitForm = () => {
         window.location.reload()
     }
     return (
         <Modal
             show={props.show}
             onHide={props.handleShowModal}
+            centered
+            size="lg"
+            id="modal-tambah-peserta"
             >
             <Modal.Header closeButton>
                 <Modal.Title>Tambah Peserta</Modal.Title>
@@ -30,11 +34,13 @@ const ModalTambahPeserta = (props) => {
                         <option>Wawancara</option>
                     </Form.Control>
                 </Form.Group>
+
+                <Button 
+                    type="submit"
+                    onClick={handleSubmitForm}>
+                    Tambah
+                </Button>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="light" onClick={props.handleShowModal}>Batal</Button>
-                <Button variant="primary" onClick={submitForm} type="submit">Simpan</Button>
-            </Modal.Footer>
         </Modal>
     )
 }
