@@ -1,13 +1,12 @@
 #modal-tambah-peserta {
-    
     .modal-body {
         padding: 30px 30px 50px;
     }
-    
+
     .form-group {
         font-size: 14px;
     }
-    
+
     .form-control {
         font-size: 14px;
         height: 45px;
@@ -16,5 +15,17 @@
     .btn-primary {
         padding: 10px 50px;
         float: right;
+    }
+}
+
+#modal-delete {
+    text-align: center;
+    .modal-body {
+        padding: 50px 30px;
+    }
+
+    button {
+        border: none;
+        margin-top: 20px;
     }
 }

@@ -5,6 +5,7 @@ import ToolkitProvider from 'react-bootstrap-table2-toolkit'
 import paginationFactory from 'react-bootstrap-table2-paginator'
 import SearchBar from "../../components/seachbar/SearchbarTabel"
 import ModalTambahPeserta from '../modal/ModalTambahPeserta'
+import ModalDelete from '../modal/ModalDelete'
 import edit from "../../assets/img/edit.svg"
 import trash from "../../assets/img/trash.svg"
 
@@ -15,17 +16,25 @@ class TabelPeserta extends Component {
         this.state = {
              data : [
                  {id: "1", nama : "adad", test : "psikotes", status : "aktif", aksi : "adjjd"},
-                 {id: "3", nama : "adad", test : "psikotes", status : "aktif", aksi : "taca"},
+                 {id: "2", nama : "adad", test : "psikotes", status : "aktif", aksi : "taca"},
              ],
-             show : false
+             show : false,
+             showModalDelete : false,
         }
         this.handleShowModal = this.handleShowModal.bind(this)
+        this.handleShowModalDelete = this.handleShowModalDelete.bind(this)
         this.actionFormatter = this.actionFormatter.bind(this)
     }
     
     handleShowModal() {
         this.setState({
             show: !this.state.show
+        })
+    }
+
+    handleShowModalDelete() {
+        this.setState({
+            showModalDelete: !this.state.showModalDelete
         })
     }
     
@@ -35,14 +44,15 @@ class TabelPeserta extends Component {
             return (
                 <div id="action">
                     <button
-                        name="verifikasi"
+                        name="edit"
                         className="btn btn-action"
                         onClick={this.handleShowModal}>
                         <img src={edit} alt="Edit" />
                     </button>
                     <button
                         name="hapus"
-                        className="btn btn-action-delete">
+                        className="btn btn-action-delete"
+                        onClick={this.handleShowModalDelete}>
                         <img src={trash} alt="Hapus" />
                     </button>
                 </div>
@@ -96,6 +106,15 @@ class TabelPeserta extends Component {
                         handleShowModal={this.handleShowModal}
                     /> : null
                 }
+
+                {
+                    (this.state.showModalDelete) ? 
+                    <ModalDelete
+                        showModalDelete={this.state.showModalDelete}
+                        handleShowModalDelete={this.handleShowModalDelete}
+                    /> : null
+                }
+
                 <ToolkitProvider
                     keyField="id"
                     data={ this.state.data }

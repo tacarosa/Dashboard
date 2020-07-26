@@ -72,6 +72,7 @@ class Dashboard extends Component {
 
     switchView = () => {
         let { showView,customColor } = this.state
+        
         switch(showView) {
             case "tabelPeserta":   
                 return (
