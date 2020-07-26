@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Switch, Route } from 'react-router-dom';
 import NavbarDashboard from '../../components/toolbar/navbar/NavbarDashboard'
 import './Dashboard.scss'
 import theme from "../../assets/img/theme.svg"
@@ -13,7 +14,6 @@ class Dashboard extends Component {
         this.state = {
              customColor : 'blue',
              colorPicker : false,
-             showView : 'tabelPeserta',
              link : "peserta",
              minimize : false
         }
@@ -71,34 +71,22 @@ class Dashboard extends Component {
     }
 
     switchView = () => {
-        let { showView,customColor } = this.state
-        
-        switch(showView) {
-            case "tabelPeserta":   
-                return (
-                    <React.Fragment>
-                        <div className={`dashboard-content-header ${customColor}`}>
-                            <h3>Daftar Peserta</h3>
-                        </div>
-                        <TabelPeserta 
-                            customColor={customColor}
-                        />
-                    </React.Fragment>
-                );
-            case "history":   
-                return (   
-                    <React.Fragment>
-                        <div className={`dashboard-content-header ${customColor}`}>
-                            <h3>History</h3>
-                        </div>
-                        <History 
-                            customColor={customColor}
-                        />
-                    </React.Fragment>
-                );
-            default:  
-                return null; 
-        }
+        let { customColor } = this.state
+
+        return (
+            <div className={(this.state.minimize) ? "minimize" : ""} id="dashboard-container">
+                <div className={`dashboard-content-header ${customColor}`}>
+                    <h3>
+                        {(window.location.pathname !== "/dashboard/history") ? "Daftar Peserta" : "History"}
+                    </h3>
+                </div>
+                <Switch>
+                    <Route exact path="/dashboard" component={() => <TabelPeserta customColor={customColor} />} />
+                    <Route path="/dashboard/peserta" component={() => <TabelPeserta customColor={customColor} />} />
+                    <Route path="/dashboard/history" component={() => <History customColor={customColor} />} />
+                </Switch>
+            </div>
+        )
     }
 
     render() {
@@ -112,9 +100,9 @@ class Dashboard extends Component {
                 <NavbarDashboard 
                     customColor={this.state.customColor}
                 />
-                <div className={(this.state.minimize) ? "minimize" : ""} id="dashboard-container">
-                    {this.switchView()}
-                </div>
+                
+                {this.switchView()}
+                
                 <div className="btn-theme-wrapper">
                     <button className="btn btn-theme" onClick={this.showColorPicker}>
                         <img src={theme} alt="theme" />

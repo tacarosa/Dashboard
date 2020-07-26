@@ -4,7 +4,7 @@ class History extends Component {
     render() {
         return (
             <div>
-                <h1>History</h1>
+                <h1>Coming Soon</h1>
             </div>
         )
     }
