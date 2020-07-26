@@ -1,0 +1,71 @@
+$colorblue : #007bff ;
+$colorDark : #23262d;
+$colorOrange : #ff9907;
+$colorGreen : #13cf55;
+$colorRed : #ff4d57;
+$colorDarkBlue : #2f6186;
+$colorAbu : #33383b;
+$colorLime : #accf2c;
+$colorBluePrimary : #22a8ff;
+// blue #0062c8
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fafbfc;
+}
+
+a, a:hover {
+    text-decoration: none;
+    color: #000
+}
+
+/* Utils */
+
+.btn-dashboard {
+    width: 100%;
+    max-width: 250px;
+    background-color: #22A8FF;
+    color: #fff;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.btn-dashboard:hover {
+    color: #fff;
+    background-color: #238fd6;
+}
+
+.btn:hover, .btn:active, .btn:focus {
+    box-shadow: none !important;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+::-webkit-scrollbar:vertical {
+    width: 12px;
+}
+::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .25);
+    border-radius: 5px;
+    padding: 20px;
+}
+::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, .1);
+}

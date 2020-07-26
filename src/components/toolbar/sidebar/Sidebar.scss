@@ -1,0 +1,115 @@
+.sidebar-container {
+    height: 100vh;
+    width: 225px;
+    background-color: #fff;
+    z-index: 3;
+    position: fixed;
+    left: 0;
+    box-shadow: 3px 0px 10px rgba(0,0,0,0.2);
+    overflow: hidden;
+    transition: all 0.5s;
+
+    &.minimize {
+        width: 65px;
+    }
+
+    &.dark {
+        background-color: #23262d;
+
+        * {
+            color: #fff !important;
+        }
+        .sidebar-header,
+        .tag-dashboard {
+            background-color: #000 !important;
+        }
+    }
+
+    &.colorfull {
+        background-color: #007bff;
+
+        * {
+            color: #fff !important;
+        }
+        .sidebar-header,
+        .tag-dashboard {
+            background-color: #13cf55 !important;
+        }
+    }
+}
+
+.sidebar-header {
+    height: 60px;
+    width: 100%;
+    background-color: #22a8ff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    img {
+        height: 40px;
+    }
+}
+
+.btn-menu {
+    padding: 0;
+}
+
+.tag-dashboard {
+    max-width: 200px;
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px 50px;
+    margin: 10px 12px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-weight: 600;
+    height: 54px;
+
+    img {
+        position: absolute;
+        left: 25px;
+        margin-top: -2px;
+    }
+
+    &.minimize {
+        max-width: 55px;
+        padding: 15px;
+        margin: 10px 5px;
+
+        img {
+            left: 20px;
+        }
+    }
+}
+
+.sidebar-menu-list {
+    padding: 0;
+
+    li {
+        list-style: none;
+        margin: 10px;
+        
+        .sidebar-menu-link {
+            display: block;
+            padding: 10px 10px;
+            box-sizing: border-box;
+            opacity: 0.7;
+
+            &:hover {
+                color: #007bff;
+                font-weight: 600;
+            }
+
+            img {
+                margin-right: 10px;
+            }
+        }
+
+        .sidebar-menu-link-active {
+            color: #007bff;
+            font-weight: 700;
+            opacity: 1;
+        }
+    }
+}

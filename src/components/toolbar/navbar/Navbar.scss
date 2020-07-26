@@ -1,0 +1,32 @@
+.navbar-header {
+    height: 60px;
+    background-color: #fff;
+    box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 5vw;
+    z-index: 2;
+
+    img {
+        height: 40px;
+    }
+}
+
+.navbar-dashboard {
+    padding: 0 2vw;
+    justify-content: flex-end;
+
+    &.blue {
+        background-color: #007bff;
+    }
+    &.dark {
+        background-color: #23262d;
+    }
+    &.colorfull {
+        background-color: #ff9907;
+    }
+}
+
