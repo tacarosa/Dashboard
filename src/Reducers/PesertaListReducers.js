@@ -49,7 +49,9 @@ export const updateDataPeserta = (namaNew, testNew, index, prevData, dataSelecte
       nama : (namaNew === "") ? dataSelected.nama : namaNew,
       test : testNew,
       status : "aktif",
-    }
+  }
+
+  data.splice(index,1)
 
   const insert = (arr, index, newData) => [
     // part of the array before the specified index
