@@ -8,27 +8,81 @@ import ModalTambahPeserta from '../modal/ModalTambahPeserta'
 import ModalDelete from '../modal/ModalDelete'
 import edit from "../../assets/img/edit.svg"
 import trash from "../../assets/img/trash.svg"
+import { connect } from "react-redux"
+import store from '../../store'
+import {
+    setDataPeserta,
+    deleteDataPeserta,
+    updateDataPeserta
+} from "../../Reducers/PesertaListReducers"
 
 class TabelPeserta extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
-             data : [
-                 {id: "1", nama : "adad", test : "psikotes", status : "aktif", aksi : "adjjd"},
-                 {id: "2", nama : "adad", test : "psikotes", status : "aktif", aksi : "taca"},
-             ],
-             show : false,
-             showModalDelete : false,
+            data : this.props.data_peserta,
+            show : false,
+            showModalDelete : false,
+            showEdit : false,
+            nama : "",
+            test : "TPA",
         }
         this.handleShowModal = this.handleShowModal.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+        this.handleShowModalEdit = this.handleShowModalEdit.bind(this)
         this.handleShowModalDelete = this.handleShowModalDelete.bind(this)
         this.actionFormatter = this.actionFormatter.bind(this)
+        this.handleSubmitForm = this.handleSubmitForm.bind(this)
+        this.handleDeleteForm = this.handleDeleteForm.bind(this)
+        this.handleUpdateForm = this.handleUpdateForm.bind(this)
     }
-    
+
+    handleChange(e) {
+        e.preventDefault();
+        this.setState({
+            [e.target.name] : e.target.value,
+        })
+    }
+
+    handleSubmitForm(){
+        let { nama, test } = this.state
+        let prevData = this.props.data_peserta
+        let index = (prevData[0] !== undefined) ? prevData[prevData.length-1].id + 1 : 1
+
+        store.dispatch(setDataPeserta(nama,test,index,prevData))
+
+        window.location.reload()
+    }
+
+    handleDeleteForm(){
+        let index = this.state.rowIndex
+        let prevData = this.props.data_peserta
+        store.dispatch(deleteDataPeserta(index,prevData))
+
+        window.location.reload()
+    }
+
+    handleUpdateForm(){
+        let { nama, test, RowSelected } = this.state
+        let prevData = this.props.data_peserta
+        
+        let index = this.state.rowIndex
+        store.dispatch(updateDataPeserta(nama,test,index,prevData, RowSelected))
+
+        window.location.reload()
+    }
+
+
     handleShowModal() {
         this.setState({
             show: !this.state.show
+        })
+    }
+    
+    handleShowModalEdit() {
+        this.setState({
+            showEdit: !this.state.showEdit
         })
     }
 
@@ -46,7 +100,7 @@ class TabelPeserta extends Component {
                     <button
                         name="edit"
                         className="btn btn-action"
-                        onClick={this.handleShowModal}>
+                        onClick={this.handleShowModalEdit}>
                         <img src={edit} alt="Edit" />
                     </button>
                     <button
@@ -61,9 +115,12 @@ class TabelPeserta extends Component {
     }
 
     rowEvents = {
-        onClick: (e, row) => {
+        onClick: (e, row,rowIndex) => {
             this.setState({ 
                 RowSelected: row, 
+                rowIndex : rowIndex,
+                nama : row.nama,
+                test : row.test
             })
         },
         onMouseEnter: (e, row, rowIndex) => {
@@ -74,6 +131,50 @@ class TabelPeserta extends Component {
         }
     }
 
+    switchModal = () => {
+
+        // Show Tambah 
+        if(this.state.show) {
+            return (
+                <ModalTambahPeserta
+                    show={this.state.show}
+                    handleShowModal={this.handleShowModal}
+                    handleChange={this.handleChange}
+                    nama={this.state.nama}
+                    test={this.state.test}
+                    handleSubmitForm={this.handleSubmitForm}
+                />
+            )
+        }
+
+        // Show Edit
+        if(this.state.showEdit) {
+            return (
+                <ModalTambahPeserta 
+                    show={this.state.showEdit}
+                    handleShowModal={this.handleShowModalEdit}
+                    showEdit={this.state.showEdit}
+                    handleChange={this.handleChange}
+                    nama={this.state.nama}
+                    test={this.state.test}
+                    handleSubmitForm={this.handleUpdateForm}
+                />
+            )
+        }
+
+        // Show Delete
+        if(this.state.showModalDelete) {
+            return (
+                <ModalDelete
+                    showModalDelete={this.state.showModalDelete}
+                    handleShowModalDelete={this.handleShowModalDelete}
+                    handleDeleteForm={this.handleDeleteForm}
+                />
+            )
+        }
+
+    }
+
     render() {
         const columnsList = [
             { dataField:'id',text:'ID' },
@@ -81,7 +182,7 @@ class TabelPeserta extends Component {
             { dataField:'test',text:'Test yang Diikuti' },
             { dataField:'status',text:'Status' },
             {
-                dataField: 'aksi',
+                dataField: '',
                 text: 'Aksi',
                 formatter: this.actionFormatter,
                 formatExtraData: { hoverIdx: this.state.hoverIdx }
@@ -99,22 +200,7 @@ class TabelPeserta extends Component {
 
         return (
             <div id="peserta-list-content">
-                {
-                    (this.state.show) ? 
-                    <ModalTambahPeserta 
-                        show={this.state.show}
-                        handleShowModal={this.handleShowModal}
-                    /> : null
-                }
-
-                {
-                    (this.state.showModalDelete) ? 
-                    <ModalDelete
-                        showModalDelete={this.state.showModalDelete}
-                        handleShowModalDelete={this.handleShowModalDelete}
-                    /> : null
-                }
-
+                {this.switchModal()}
                 <ToolkitProvider
                     keyField="id"
                     data={ this.state.data }
@@ -154,5 +240,10 @@ class TabelPeserta extends Component {
         )
     }
 }
+function mapStateToProps(state) {
+    return {
+        data_peserta: state.peserta.data_peserta,
+    };
+  }
 
-export default TabelPeserta
+export default connect(mapStateToProps)(TabelPeserta);

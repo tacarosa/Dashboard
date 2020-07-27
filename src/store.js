@@ -4,7 +4,6 @@ import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
 import createRootReducer from './Reducers';
 
-// Use this if you want to use routing with hash
 export const history = createBrowserHistory();
 
 const initialState = {}

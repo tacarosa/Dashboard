@@ -6,6 +6,13 @@ import store, { history } from './store';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { reqDataPeserta } from './Reducers/PesertaListReducers';
+
+let data = localStorage.getItem("data_peserta")
+
+if(data){
+  store.dispatch(reqDataPeserta(JSON.parse(data)))
+}
 
 
 ReactDOM.render(

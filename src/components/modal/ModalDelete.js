@@ -3,9 +3,6 @@ import { Modal, Button } from 'react-bootstrap'
 import "./Modal.scss"
 
 const ModalDelete = (props) => {
-    const handleSubmitForm = () => {
-        window.location.reload()
-    }
     return (
         <Modal
             show={props.showModalDelete}
@@ -20,7 +17,7 @@ const ModalDelete = (props) => {
                 <Button 
                     type="submit"
                     className="btn-dashboard"
-                    onClick={handleSubmitForm}>
+                    onClick={props.handleDeleteForm}>
                     Hapus
                 </Button>
             </Modal.Body>

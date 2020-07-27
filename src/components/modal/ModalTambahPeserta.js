@@ -3,9 +3,6 @@ import { Modal, Button, Form } from 'react-bootstrap'
 import "./Modal.scss"
 
 const ModalTambahPeserta = (props) => {
-    const handleSubmitForm = () => {
-        window.location.reload()
-    }
     return (
         <Modal
             show={props.show}
@@ -15,7 +12,9 @@ const ModalTambahPeserta = (props) => {
             id="modal-tambah-peserta"
             >
             <Modal.Header closeButton>
-                <Modal.Title>Tambah Peserta</Modal.Title>
+                <Modal.Title>
+                    {(props.showEdit)? "Edit " : " Tambah"} Peserta
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <p>
@@ -23,22 +22,33 @@ const ModalTambahPeserta = (props) => {
                 </p>
                 <Form.Group controlId="name">
                     <Form.Label>Nama Peserta</Form.Label>
-                    <Form.Control type="email" placeholder="Masukkan nama peserta" />
+                    <Form.Control 
+                        type="text" 
+                        placeholder="Masukkan nama peserta" 
+                        name="nama"
+                        value={props.nama}
+                        onChange={props.handleChange}
+                        />
                 </Form.Group>
                 
                 <Form.Group controlId="test">
                     <Form.Label>Test yang diikuti</Form.Label>
-                    <Form.Control as="select">
-                        <option>TPA</option>
-                        <option>Psikotes</option>
-                        <option>Wawancara</option>
+                    <Form.Control 
+                        as="select"
+                        name="test"
+                        onChange={props.handleChange}
+                        value={props.test}
+                        >
+                        <option value="TPA">TPA</option>
+                        <option value="Psikotes">Psikotes</option>
+                        <option value="Wawancara">Wawancara</option>
                     </Form.Control>
                 </Form.Group>
 
                 <Button 
                     type="submit"
-                    onClick={handleSubmitForm}>
-                    Tambah
+                    onClick={props.handleSubmitForm}>
+                    {(props.showEdit)? "Edit" : "Tambah"}
                 </Button>
             </Modal.Body>
         </Modal>

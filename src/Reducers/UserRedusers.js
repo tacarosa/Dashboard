@@ -1,43 +1,54 @@
 // Actions Type
-const REQ_LOGIN = "user/REQ_LOGIN";
-const RCV_LOGIN = "user/RCV_LOGIN";
+const UPDATE_ID_TOKEN = "user/UPDATE_ID_TOKEN"
+const RCV_LOGIN = "user/RCV_LOGIN"
 
 
-// Pure Action// PURE ACTIONS CREATOR
-const reqLogin = data => ({
-    type: REQ_LOGIN,
-    payload: {
-        data_login: data,
-        status: "req_login",
-    }
-});
-
-export const rcvLogin = data => ({
+// Pure Action creator
+export const rcvLogin = (data) => ({
     type: RCV_LOGIN,
     payload: {
-        data_user: data,
-        status: "rcv_login"
+        status: data
     }
 });
 
+export const updateIdToken = (id_token) => ({
+    type: UPDATE_ID_TOKEN,
+    payload: {
+        id_token: id_token
+    }
+});
 
+// Action
+export const setUserLogin = (username, password) => dispatch => {
+    let status = "gagal"
+
+    if(username === "admin" && password === "123456") {
+        status = "berhasil"
+        dispatch(updateIdToken(username+password))
+    } 
+    
+    dispatch(rcvLogin(status))
+
+}
+
+//Init 
 const initialState = {
-    data_user: {},
+    id_token: "",
+    data_login: "",
 };
 
 // Reducers
 export default function UserReducers(state = initialState, action) {
     switch (action.type) {
-        case REQ_LOGIN:
+        case UPDATE_ID_TOKEN:
             return {
                 ...state,
-                status: action.payload.status,
+                id_token: action.payload,
             };
         case RCV_LOGIN:
             return {
                 ...state,
-                status: action.payload.status,
-                data_user: action.payload.data_user
+                data_login: action.payload
             };
         default:
             return state;
