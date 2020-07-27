@@ -9,7 +9,7 @@ import ModalDelete from '../modal/ModalDelete'
 import edit from "../../assets/img/edit.svg"
 import trash from "../../assets/img/trash.svg"
 import { connect } from "react-redux"
-import store from '../../store'
+import store, {history} from '../../store'
 import {
     setDataPeserta,
     deleteDataPeserta,
@@ -52,7 +52,7 @@ class TabelPeserta extends Component {
 
         store.dispatch(setDataPeserta(nama,test,index,prevData))
 
-        window.location.reload()
+        history.push("/dashboard")
     }
 
     handleDeleteForm(){
@@ -60,7 +60,7 @@ class TabelPeserta extends Component {
         let prevData = this.props.data_peserta
         store.dispatch(deleteDataPeserta(index,prevData))
 
-        window.location.reload()
+        history.push("/dashboard")
     }
 
     handleUpdateForm(){
@@ -70,7 +70,7 @@ class TabelPeserta extends Component {
         let index = this.state.rowIndex
         store.dispatch(updateDataPeserta(nama,test,index,prevData, RowSelected))
 
-        window.location.reload()
+        history.push("/dashboard")
     }
 
 
